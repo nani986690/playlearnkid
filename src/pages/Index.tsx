@@ -1,12 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import Navbar from '@/components/layout/Navbar';
+import Hero from '@/components/home/Hero';
+import GameCategories from '@/components/home/GameCategories';
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      <Navbar />
+      <main>
+        <Hero />
+        <GameCategories />
+        
+        {/* Footer */}
+        <footer className="py-12 px-4 text-center bg-muted/50">
+          <div className="container mx-auto">
+            <div className="text-4xl mb-4">🎮📚✨</div>
+            <p className="text-xl font-bold text-foreground mb-2">
+              Play & Learn Kids
+            </p>
+            <p className="text-muted-foreground">
+              Making learning fun, one game at a time! 🌟
+            </p>
+            <p className="text-sm text-muted-foreground mt-4">
+              Perfect for curious minds aged 4-10
+            </p>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 };
