@@ -31,13 +31,31 @@ const alphabetData = [
   { letter: 'Z', word: 'Zebra', emoji: '🦓' },
 ];
 
+const speakText = (text: string) => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.8;
+    utterance.pitch = 1.1;
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 const AlphabetGame: React.FC = () => {
   const [selectedLetter, setSelectedLetter] = useState<typeof alphabetData[0] | null>(null);
-  const { playClick, playSuccess } = useSound();
+  const { playClick, playSuccess, soundEnabled } = useSound();
 
   const handleLetterClick = (item: typeof alphabetData[0]) => {
     playClick();
     setSelectedLetter(item);
+    
+    if (soundEnabled) {
+      setTimeout(() => {
+        speakText(`${item.letter} is for ${item.word}`);
+      }, 100);
+    }
+    
     setTimeout(() => playSuccess(), 200);
   };
 

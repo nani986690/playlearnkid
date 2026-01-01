@@ -16,13 +16,31 @@ const animals = [
   { name: 'Bee', emoji: '🐝', sound: 'Buzz buzz!' },
 ];
 
+const speakAnimalSound = (animalName: string, sound: string) => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(`The ${animalName} says ${sound}`);
+    utterance.rate = 0.85;
+    utterance.pitch = 1.2;
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 const AnimalSoundsGame: React.FC = () => {
   const [selectedAnimal, setSelectedAnimal] = useState<typeof animals[0] | null>(null);
-  const { playClick, playSuccess } = useSound();
+  const { playClick, playSuccess, soundEnabled } = useSound();
 
   const handleAnimalClick = (animal: typeof animals[0]) => {
     playClick();
     setSelectedAnimal(animal);
+    
+    if (soundEnabled) {
+      setTimeout(() => {
+        speakAnimalSound(animal.name, animal.sound);
+      }, 100);
+    }
+    
     setTimeout(() => playSuccess(), 100);
   };
 
